@@ -1,3 +1,4 @@
+![alt text](<Screenshot 2025-12-07 161310.png>)
 ```markdown
 # Heart Disease Prediction Model ❤️
 
