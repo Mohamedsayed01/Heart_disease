@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(to bottom, #4e0374, #c37ee6);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background-color: #daa8f4;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid black;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .form-control, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid black;
+            background-color: #f0d0ff;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4e0374;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .instructions {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: white;
+            background-color: #6b1fa1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Heart Disease Predictor</h1>
+        <div class="instructions">
+            Fill in the patient data carefully. Use the dropdowns for categorical fields and enter numbers where required.
+        </div>
+
+        <form action="{{ request.url_for('predict_page') }}" method="POST">
+            <input class="form-control" type="number" name="Age" placeholder="Age (years)" min="0" max="120" required>
+
+            <label for="Sex">Sex:</label>
+            <select class="form-control" name="Sex" id="Sex" required>
+                <option value="">Select Sex</option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+            </select>
+
+            <label for="ChestPainType">Chest Pain Type:</label>
+            <select class="form-control" name="ChestPainType" id="ChestPainType" required>
+                <option value="">Select Chest Pain Type</option>
+                <option value="0">ATA</option>
+                <option value="1">NAP</option>
+                <option value="2">ASY</option>
+                <option value="3">TA</option>
+            </select>
+
+            <input class="form-control" type="number" name="RestingBP" placeholder="Resting Blood Pressure (mm Hg)" min="50" max="250" required>
+            <input class="form-control" type="number" name="Cholesterol" placeholder="Cholesterol (mg/dl)" min="100" max="600" required>
+
+            <label for="FastingBS">Fasting Blood Sugar > 120 mg/dl:</label>
+            <select class="form-control" name="FastingBS" id="FastingBS" required>
+                <option value="">Select Fasting Blood Sugar</option>
+                <option value="1">True</option>
+                <option value="0">False</option>
+            </select>
+
+            <label for="RestingECG">Resting ECG Results:</label>
+            <select class="form-control" name="RestingECG" id="RestingECG" required>
+                <option value="">Select ECG</option>
+                <option value="0">Normal</option>
+                <option value="1">ST</option>
+                <option value="2">LVH</option>
+            </select>
+
+            <input class="form-control" type="number" name="MaxHR" placeholder="Maximum Heart Rate" min="60" max="220" required>
+
+            <label for="ExerciseAngina">Exercise Induced Angina:</label>
+            <select class="form-control" name="ExerciseAngina" id="ExerciseAngina" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <input class="form-control" type="number" step="0.1" name="Oldpeak" placeholder="ST Depression (Oldpeak)" min="0" max="10" required>
+
+            <label for="ST_Slope">ST Slope:</label>
+            <select class="form-control" name="ST_Slope" id="ST_Slope" required>
+                <option value="">Select ST Slope</option>
+                <option value="0">Up</option>
+                <option value="1">Flat</option>
+                <option value="2">Down</option>
+            </select>
+
+            <input type="submit" class="btn" value="Predict">
+        </form>
+
+        {% if result %}
+            <div class="result">Prediction: {{ result }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
